@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Campus Bites | Demo Food App</title>
+  <style>
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: Arial, sans-serif; background: #fff8f1; color: #33231b; }
+    header { background: #9c3d1c; color: white; padding: 28px 20px; }
+    header div, main { max-width: 1000px; margin: 0 auto; }
+    header h1 { margin: 0 0 8px; }
+    header p { margin: 0; }
+    main { padding: 28px 20px; }
+    .notice { background: #fff0dd; border-left: 4px solid #bc5b22; padding: 14px; }
+    .menu { display: grid; grid-template-columns: repeat(auto-fit, minmax(210px, 1fr)); gap: 16px; }
+    .card, .cart { background: white; border: 1px solid #ead8c8; border-radius: 8px; padding: 20px; }
+    .card h3 { margin-top: 0; }
+    .price { font-weight: bold; font-size: 1.2rem; }
+    button { background: #a63e1a; color: white; border: 0; border-radius: 4px; padding: 10px 14px; cursor: pointer; font-size: 1rem; }
+    button:hover { background: #74290f; }
+    button:focus-visible { outline: 3px solid #a56300; outline-offset: 3px; }
+    .cart { margin-top: 24px; }
+    footer { padding: 20px; text-align: center; color: #6b5347; }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Campus Bites</h1>
+      <p>A simple food-ordering demo for our DevOps workshop</p>
+    </div>
+  </header>
+
+  <main>
+    <p class="notice">This is a fictional demo. No real orders or payments are processed.</p>
+
+    <h2>Our menu</h2>
+    <div class="menu">
+      <article class="card">
+        <h3>Veg Sandwich</h3>
+        <p>A sandwich filled with fresh vegetables.</p>
+        <p class="price" data-price="100"></p>
+        <button type="button" class="add-to-cart" aria-label="Add Veg Sandwich to cart">Add to cart</button>
+      </article>
+      <article class="card">
+        <h3>Veg Burger</h3>
+        <p>A tasty vegetable burger.</p>
+        <p class="price" data-price="150"></p>
+        <button type="button" class="add-to-cart" aria-label="Add Veg Burger to cart">Add to cart</button>
+      </article>
+      <article class="card">
+        <h3>Fruit Juice</h3>
+        <p>A refreshing drink to go with your meal.</p>
+        <p class="price" data-price="80"></p>
+        <button type="button" class="add-to-cart" aria-label="Add Fruit Juice to cart">Add to cart</button>
+      </article>
+    </div>
+
+    <section class="cart" aria-labelledby="cart-title">
+      <h2 id="cart-title">Your cart</h2>
+      <p id="cart-summary" aria-live="polite">Items: 0 | Total: Rs. 0</p>
+      <button type="button" id="clear-cart">Clear cart</button>
+      <p>The cart resets when you refresh or close the page.</p>
+    </section>
+  </main>
+  <footer>Campus Bites is a fictional workshop project.</footer>
+
+  <script>
+    let itemCount = 0;
+    let total = 0;
+    const summary = document.getElementById("cart-summary");
+
+    function updateCart() {
+      summary.textContent = `Items: ${itemCount} | Total: Rs. ${total}`;
+    }
+
+    document.querySelectorAll(".card").forEach((card) => {
+      const price = Number(card.querySelector(".price").dataset.price);
+      card.querySelector(".price").textContent = `Rs. ${price}`;
+      card.querySelector(".add-to-cart").addEventListener("click", () => {
+        itemCount += 1;
+        total += price;
+        updateCart();
+      });
+    });
+
+    document.getElementById("clear-cart").addEventListener("click", () => {
+      itemCount = 0;
+      total = 0;
+      updateCart();
+    });
+  </script>
+</body>
+</html>
